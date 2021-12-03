@@ -1,0 +1,93 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@ViewData["Title"]</title>
+  <style>
+    table{
+      margin: 50px 0;
+      text-align: left;
+      border-collapse: separate;
+      border: 1px solid #ddd;
+      border-spacing: 10px;
+      border-radius: 3px;
+      background: #fdfdfd;
+      font-size: 14px;
+      width: auto;
+    }
+    td,th{
+      border: 1px solid #ddd;
+      padding: 5px;
+      border-radius: 3px;
+    }
+    th{
+      background: #E4E4E4;
+    }
+    caption{
+      font-style: italic;
+      text-align: right;
+      color: #547901;
+    }
+  </style>
+  </head>
+<body>
+
+    <a asp-controller="Home" asp-action="ProductEdit">Добавить продукт</a>
+    
+  <TABLE>
+    <caption>Таблица продуктов</caption>
+
+    <TR>
+            <TH>Имя продукта</TH> <TH>Описание продукта</TH>
+    </TR>
+        @foreach (var product in Model)
+    {
+    <TR>
+            <TD>@product.Name</TD>
+            <TD>@product.Description</TD>
+            <td>
+                <form method="post" asp-controller="Home" asp-action="DeleteProduct">
+                    <input type="hidden" value="@product.Id" name="id">
+                    <input type="submit" value="Удалить" />
+                </form>
+            </td>
+            <td>
+                <form method="post" asp-controller="Home" asp-action="ProductEdit">
+                    <input type="hidden" value="@product.Id" name="id">
+                    <input type="submit" value="Редактировать" />
+                </form>
+            </td>
+    </TR>
+    }
+</TABLE>
+
+    <p>Фильтр по имени изделия</p>
+<div>
+    <form asp-controller="Home" asp-action="Index" method="post">
+        <input type="text" name="name" />
+        <input type="submit" value="Поиск" />
+    </form>
+</div>
+
+@*
+<div>
+    <form method="post" asp-controller="Home" asp-action="ProductAdd">
+        <input type="hidden" value="@Guid.NewGuid()" name="id" />
+        <p>Имя продукта</p>
+        <input type="text" name="Name" />
+        <p>Описание продукта</p>
+        <input type="text" name="Description" />
+        <br />
+        <input type="submit" value="Добавить" />
+    </form>
+</div>*@
+</body>
+</html>
