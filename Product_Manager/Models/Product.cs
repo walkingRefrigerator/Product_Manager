@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
 namespace Product_Manager
 {
+    //Класс объекта из бд
     public partial class Product
     {
-        //public Product ()
-        //{
-        //    Id = Guid.NewGuid ();
-        //}
-
         public Guid Id { get; set; }
 
         [Required(ErrorMessage = "Не указано имя")]

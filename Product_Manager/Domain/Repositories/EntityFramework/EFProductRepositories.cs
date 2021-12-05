@@ -3,8 +3,6 @@ using Product_Manager.Domain.Repositories.Abstract;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Product_Manager.Domain.Repositories.EntityFramework
 {
@@ -30,6 +28,7 @@ namespace Product_Manager.Domain.Repositories.EntityFramework
         //Вывод списка по фильтру
         public IList<Product> GetFilterName(string name)
         {
+            //Поиск объектов с совпадающими первыми буквами
             return _testDbContext.Products.Where(x => x.Name.StartsWith(name)).ToList();
         }
         //Вывод объета по id
@@ -43,11 +42,13 @@ namespace Product_Manager.Domain.Repositories.EntityFramework
             //Проверка по id, был ли ранее создан объект или нет
             if (product.Id == default)
             {
+                //Добавление объекта в бд с присвоением ему id
                 product.Id = Guid.NewGuid();
                 _testDbContext.Entry(product).State = EntityState.Added;
             }
             else
             {
+                //Изменение объекта в бд
                 _testDbContext.Entry(product).State = EntityState.Modified;
             }
 

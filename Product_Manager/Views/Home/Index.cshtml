@@ -2,7 +2,7 @@
 <div class="container">
 
   <div id="placeHolderHere"></div>
-
+  @*Оборачиваем эл-ты в row, чтобы разместить основные блоки столбцом*@
   <div class="row">
 
     <div class="col-sm">
@@ -16,18 +16,21 @@
           <th></th>
           <th></th>
         </tr>
+        @*Перебор эл-тов из списка для вывода на таблицу*@
         @foreach (var product in Model)
         {
         <tr>
           <td>@product.Name</td>
           <td>@product.Description</td>
           <td>
+              @*Создание формы для отправление в action id для удаления объекта из бд*@
             <form method="post" asp-controller="Home" asp-action="DeleteProduct">
               <input type="hidden" value="@product.Id" name="id" />
               <input type="submit" value="Удалить" />
             </form>
           </td>
           <td>
+              @*Кнопка для вывода модального окна с передачей id объекта в action*@
             <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addProduct"
               data-url="@Url.Action("ProductEdit", new {id=product.Id} )">Редактировать</button>
           </td>
@@ -40,6 +43,7 @@
 
       <p>Фильтр по имени изделия</p>
       <div>
+          @*Форма для отправки текста в action для фильтрации объектов в таблице*@
         <form asp-controller="Home" asp-action="Index" method="post">
           <input type="text" name="name" />
           <input type="submit" value="Поиск" />
@@ -47,13 +51,14 @@
       </div>
 
     </div>
-
+    @*Кнопка для вывода модального окна для добавление продуктов*@
     <div class="text-center">
       <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addProduct"
         data-url="@Url.Action("ProductAdd")">Добавить продукт</button>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*Подключение js скриптов*@
+    <script src="~/js/jquery.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
     <script src="~/js/main.js"></script>
 

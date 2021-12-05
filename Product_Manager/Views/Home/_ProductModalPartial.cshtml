@@ -18,7 +18,7 @@
                 </div>
                 <div class="modal-body">
                     @*Форма для отправки данных с modal*@
-                    <form asp-controller="Home" asp-action="ProductAdd" method="post">
+                    <form asp-controller="Home" asp-action="ProductAddOrEdit" method="post">
                         @*Отправка id для определения объект для редактирования или новый*@
                         <input type="hidden" asp-for="@Model.Id" />
                         <div class="form-group">
