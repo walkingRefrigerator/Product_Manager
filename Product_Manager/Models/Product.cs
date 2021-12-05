@@ -8,12 +8,17 @@ namespace Product_Manager
 {
     public partial class Product
     {
-        [Required]
+        //public Product ()
+        //{
+        //    Id = Guid.NewGuid ();
+        //}
+
         public Guid Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Не указано имя")]
         [Display(Name ="Наименование продукта")]
         public string Name { get; set; }
+
         [Display(Name ="Описание продукта")]
         public string Description { get; set; }
     }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Product_Manager.Domain.Repositories.Abstract;
 using Product_Manager.Domain.Repositories.EntityFramework;
-using Product_Manager.Service;
+using Product_Manager.AppStart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,8 +44,6 @@ namespace Product_Manager
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseHttpsRedirection();
-
             //подключаем поддержку статичных файлов в приложении (css, js и т.д.)
             app.UseStaticFiles();
 

@@ -7,16 +7,18 @@ namespace Product_Manager.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly EFProductRepositories _context;
+        private readonly IProductRepositories _context;
 
         public HomeController (IProductRepositories context)
         {
-            _context = (EFProductRepositories)context;
+            _context = context;
         }
 
 
         public IActionResult Index()
         {
+            ViewData["Title"] = "Список продуктов";
+
             var products = _context.GetAll();
 
             return View(model: products);
@@ -27,37 +29,46 @@ namespace Product_Manager.Controllers
         {
             if (string.IsNullOrEmpty(name))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var products = _context.GetFilterName(name);
             return View(model: products);
         }
 
-        public IActionResult ProductEdit (Guid id)
-        {
-            Product product = id == default ? new Product() : _context.GetProduct(id);
-            return View(model: product);
-        }
 
+        [HttpGet]
+        public IActionResult ProductAdd ()
+        {
+            Product product = new Product();
+            return PartialView("_ProductModelPartial", product);
+        }
+        
         [HttpPost]
-        public IActionResult ProductEdit (Product product)
+        public IActionResult ProductAdd(Product product)
         {
             if (ModelState.IsValid)
             {
-                _context.PostOrPutProduct(product);
-                return RedirectToAction("Index");
+                _context.PostProduct(product);
+                return RedirectToAction(nameof(Index));
             }
 
             return View(model: product);
         }
 
+        [HttpGet]
+        public IActionResult ProductEdit(Guid id)
+        {
+            Product product = _context.GetProduct(id);
+            return PartialView("_ProductModelPartial", product);
+        }
+
         [HttpPost]
-        public IActionResult DeleteProduct (Guid id)
+        public IActionResult DeleteProduct(Guid id)
         {
             _context.DeleteProduct(id);
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
 

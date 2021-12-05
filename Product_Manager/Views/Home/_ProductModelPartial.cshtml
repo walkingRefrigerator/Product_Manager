@@ -1,0 +1,40 @@
+﻿@model Product
+
+@*Задаем id для вызова modal*@
+<div class="modal fade" id="addProduct">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @*Вывод титульника modal в зависимости от выбранной кнопки*@
+                    @if (Model.Name == null)
+                    {
+                        <h4 class="modal-title" id="addProductLabel">Добавление продукта</h4>
+                    }
+                    else
+                    {
+                        <h4 class="modal-title" id="addProductLabel">Редактирование продукта</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    @*Форма для отправки данных с modal*@
+                    <form asp-controller="Home" asp-action="ProductAdd" method="post">
+                        @*Отправка id для определения объект для редактирования или новый*@
+                        <input type="hidden" asp-for="@Model.Id" />
+                        <div class="form-group">
+                            <label asp-for="Name"></label>
+                            <input required type="text" asp-for="Name" value="@Model.Name" class="form-control"/>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" class="form-control" value="@Model.Description"/>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary" >Сохранить</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

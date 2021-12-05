@@ -1,93 +1,62 @@
 ﻿@model IEnumerable<Product>
+<div class="container">
 
-@{
-    ViewData["Title"] = "Home Page";
-}
+  <div id="placeHolderHere"></div>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@ViewData["Title"]</title>
-  <style>
-    table{
-      margin: 50px 0;
-      text-align: left;
-      border-collapse: separate;
-      border: 1px solid #ddd;
-      border-spacing: 10px;
-      border-radius: 3px;
-      background: #fdfdfd;
-      font-size: 14px;
-      width: auto;
-    }
-    td,th{
-      border: 1px solid #ddd;
-      padding: 5px;
-      border-radius: 3px;
-    }
-    th{
-      background: #E4E4E4;
-    }
-    caption{
-      font-style: italic;
-      text-align: right;
-      color: #547901;
-    }
-  </style>
-  </head>
-<body>
+  <div class="row">
 
-    <a asp-controller="Home" asp-action="ProductEdit">Добавить продукт</a>
-    
-  <TABLE>
-    <caption>Таблица продуктов</caption>
+    <div class="col-sm">
 
-    <TR>
-            <TH>Имя продукта</TH> <TH>Описание продукта</TH>
-    </TR>
+      <table class="table table-info w-auto">
+        <caption>Таблица продуктов</caption>
+
+        <tr>
+          <th>Имя продукта</th>
+          <th>Описание продукта</th>
+          <th></th>
+          <th></th>
+        </tr>
         @foreach (var product in Model)
-    {
-    <TR>
-            <TD>@product.Name</TD>
-            <TD>@product.Description</TD>
-            <td>
-                <form method="post" asp-controller="Home" asp-action="DeleteProduct">
-                    <input type="hidden" value="@product.Id" name="id">
-                    <input type="submit" value="Удалить" />
-                </form>
-            </td>
-            <td>
-                <form method="post" asp-controller="Home" asp-action="ProductEdit">
-                    <input type="hidden" value="@product.Id" name="id">
-                    <input type="submit" value="Редактировать" />
-                </form>
-            </td>
-    </TR>
-    }
-</TABLE>
+        {
+        <tr>
+          <td>@product.Name</td>
+          <td>@product.Description</td>
+          <td>
+            <form method="post" asp-controller="Home" asp-action="DeleteProduct">
+              <input type="hidden" value="@product.Id" name="id" />
+              <input type="submit" value="Удалить" />
+            </form>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addProduct"
+              data-url="@Url.Action("ProductEdit", new {id=product.Id} )">Редактировать</button>
+          </td>
+        </tr>
+        }
+      </table>
 
-    <p>Фильтр по имени изделия</p>
-<div>
-    <form asp-controller="Home" asp-action="Index" method="post">
-        <input type="text" name="name" />
-        <input type="submit" value="Поиск" />
-    </form>
+    </div>
+    <div class="col-sm">
+
+      <p>Фильтр по имени изделия</p>
+      <div>
+        <form asp-controller="Home" asp-action="Index" method="post">
+          <input type="text" name="name" />
+          <input type="submit" value="Поиск" />
+        </form>
+      </div>
+
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addProduct"
+        data-url="@Url.Action("ProductAdd")">Добавить продукт</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/main.js"></script>
+
+  </div>
+
 </div>
-
-@*
-<div>
-    <form method="post" asp-controller="Home" asp-action="ProductAdd">
-        <input type="hidden" value="@Guid.NewGuid()" name="id" />
-        <p>Имя продукта</p>
-        <input type="text" name="Name" />
-        <p>Описание продукта</p>
-        <input type="text" name="Description" />
-        <br />
-        <input type="submit" value="Добавить" />
-    </form>
-</div>*@
-</body>
-</html>
